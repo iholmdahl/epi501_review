@@ -195,75 +195,55 @@ $(document).ready(function () {
 <div id="table-of-contents-reverse-chronological" class="section level2">
 <h2>Table of Contents (reverse chronological)</h2>
 <ul>
-<li><p><a href="./errors.html"><strong>Common Error Messages</strong></a></p></li>
-<li>Final Review (March 2, 2018)
+<li><a href="./errors.html"><strong>Common Error Messages</strong></a></li>
+</ul>
+<!-- - Final Review (March 2, 2018)
+    - [Slides for final review](./20180302_review_session/index.html) [[PDF]](./20180302_review_session/review_slides.pdf)
+        - [Tips](./20180302_review_session/index.html#3)
+        - [$R_0$ review](./20180302_review_session/index.html#5)
+        - [Practice Exam (Part A)](./20180302_review_session/index.html#22)
+        - [Practice Exam (Part B)](./20180302_review_session/index.html#52)
+        - [Quick note about deterministic models](./20180302_review_session/index.html#73)
+    - A [simulation showing impact of latent period](./20180302_review_session/impact_of_latent.nb.html) on your infectious curve
+- Week 3 (Februrary 9, 2018)
+    - Review session: 
+        - Went over Week 1 and Week 2 slides in class, line-by-line. Please review those if you didn't attend the lab.
+        - In addition, we spent a lot of time on the ebola time-varying transmission model. 
+            - I made [a notebook to answer the two questions](./20180209_lab_session/ebola_questions.nb.html) we didn't have time for: (1) What happens when you delay intervention? (2) What happens when you change the rate of decay?
+        - As a reminder, [I made an interactive infectious disease app you can play with](https://mkiang.shinyapps.io/DiseaseDynamics/). Play with parameters, especially the relationship between the latent period and the infectious period, to get a better sense of **when** we need a latent compartment.
+- Week 2 (January 29, 2018)
+    - [Ebola and SEIR models](./20180202_ebola/index.html) [[PDF](./20180202_ebola/20180202-ebola.pdf)] [[Code and Data Files](https://github.com/mkiang/epi501_review/tree/master/20180202_ebola/code)]
+        - [SEIR model with case fatality ratio](./20180202_ebola/index.html#3)
+        - [Plotting SEIR lines](./20180202_ebola/index.html#11)
+        - [COunting total cases and total deaths](./20180202_ebola/index.html#13)
+        - [Time-varying transmission](./20180202_ebola/index.html#18)
+        - [Calculate changing $R_0$](./20180202_ebola/index.html#30)
+        - [Time-varying beta](./20180202_ebola/index.html#38)
+
+- Week 1 (January 22, 2018)
+    - [Introduction to ODE models in `R`](./20180129_intro_odes/index.html) [[PDF](./20180129_intro_odes/20180129-intro-odes.pdf)] [[Code Files](https://github.com/mkiang/epi501_review/tree/master/20180129_intro_odes/code)]
+        - [SIR code review](./20180129_intro_odes/index.html#7)
+        - [Visualize your results](./20180129_intro_odes/index.html#54)
+        - [Make an SI model](./20180129_intro_odes/index.html#64)
+        - [Make an SIS model](./20180129_intro_odes/index.html#70)
+        - [Make an SIR model with births/deaths](./20180129_intro_odes/index.html#73)
+    - [Introduction to `R`, discrete time models, non-infectious ODE models.](./20180124_intro_to_R_headaches/index.html) 
+    - Download [`headache_exercises.zip`](./exercises/01_headaches/headache_exercises.zip)
+        - Or download the code here (not recommended):
+            - [`discrete_births_and_deaths.R`](https://raw.githubusercontent.com/mkiang/epi501_review/master/exercises/01_headaches/discrete_births_and_deaths.R)
+            - [`headache_discrete.R`](https://raw.githubusercontent.com/mkiang/epi501_review/master/exercises/01_headaches/headache_discrete.R)
+            - [`headache_ode.R`](https://raw.githubusercontent.com/mkiang/epi501_review/master/exercises/01_headaches/headache_ode.R)
+    - Annotated code:
+        - For the [`headache_discrete.R`](./20180124_intro_to_R_headaches/anno_code/discrete_headaches.nb.html) file.
+        - For the [`headache_ode.R`](./20180124_intro_to_R_headaches/anno_code/ode_headaches.nb.html) file.
+-->
 <ul>
-<li><a href="./20180302_review_session/index.html">Slides for final review</a> <a href="./20180302_review_session/review_slides.pdf">[PDF]</a>
+<li>Week 0 (January 28, 2018)
 <ul>
-<li><a href="./20180302_review_session/index.html#3">Tips</a></li>
-<li><a href="./20180302_review_session/index.html#5"><span class="math inline">\(R_0\)</span> review</a></li>
-<li><a href="./20180302_review_session/index.html#22">Practice Exam (Part A)</a></li>
-<li><a href="./20180302_review_session/index.html#52">Practice Exam (Part B)</a></li>
-<li><a href="./20180302_review_session/index.html#73">Quick note about deterministic models</a></li>
-</ul></li>
-<li>A <a href="./20180302_review_session/impact_of_latent.nb.html">simulation showing impact of latent period</a> on your infectious curve</li>
-</ul></li>
-<li>Week 3 (Februrary 9, 2018)
-<ul>
-<li>Review session:
-<ul>
-<li>Went over Week 1 and Week 2 slides in class, line-by-line. Please review those if you didn’t attend the lab.</li>
-<li>In addition, we spent a lot of time on the ebola time-varying transmission model.
-<ul>
-<li>I made <a href="./20180209_lab_session/ebola_questions.nb.html">a notebook to answer the two questions</a> we didn’t have time for: (1) What happens when you delay intervention? (2) What happens when you change the rate of decay?</li>
-</ul></li>
-<li>As a reminder, <a href="https://mkiang.shinyapps.io/DiseaseDynamics/">I made an interactive infectious disease app you can play with</a>. Play with parameters, especially the relationship between the latent period and the infectious period, to get a better sense of <strong>when</strong> we need a latent compartment.</li>
-</ul></li>
-</ul></li>
-<li>Week 2 (January 29, 2018)
-<ul>
-<li><a href="./20180202_ebola/index.html">Ebola and SEIR models</a> [<a href="./20180202_ebola/20180202-ebola.pdf">PDF</a>] [<a href="https://github.com/mkiang/epi501_review/tree/master/20180202_ebola/code">Code and Data Files</a>]
-<ul>
-<li><a href="./20180202_ebola/index.html#3">SEIR model with case fatality ratio</a></li>
-<li><a href="./20180202_ebola/index.html#11">Plotting SEIR lines</a></li>
-<li><a href="./20180202_ebola/index.html#13">COunting total cases and total deaths</a></li>
-<li><a href="./20180202_ebola/index.html#18">Time-varying transmission</a></li>
-<li><a href="./20180202_ebola/index.html#30">Calculate changing <span class="math inline">\(R_0\)</span></a></li>
-<li><a href="./20180202_ebola/index.html#38">Time-varying beta</a></li>
-</ul></li>
-</ul></li>
-<li>Week 1 (January 22, 2018)
-<ul>
-<li><a href="./20180129_intro_odes/index.html">Introduction to ODE models in <code>R</code></a> [<a href="./20180129_intro_odes/20180129-intro-odes.pdf">PDF</a>] [<a href="https://github.com/mkiang/epi501_review/tree/master/20180129_intro_odes/code">Code Files</a>]
-<ul>
-<li><a href="./20180129_intro_odes/index.html#7">SIR code review</a></li>
-<li><a href="./20180129_intro_odes/index.html#54">Visualize your results</a></li>
-<li><a href="./20180129_intro_odes/index.html#64">Make an SI model</a></li>
-<li><a href="./20180129_intro_odes/index.html#70">Make an SIS model</a></li>
-<li><a href="./20180129_intro_odes/index.html#73">Make an SIR model with births/deaths</a></li>
-</ul></li>
-<li><a href="./20180124_intro_to_R_headaches/index.html">Introduction to <code>R</code>, discrete time models, non-infectious ODE models.</a></li>
-<li>Download <a href="./exercises/01_headaches/headache_exercises.zip"><code>headache_exercises.zip</code></a>
-<ul>
-<li>Or download the code here (not recommended):
-<ul>
-<li><a href="https://raw.githubusercontent.com/mkiang/epi501_review/master/exercises/01_headaches/discrete_births_and_deaths.R"><code>discrete_births_and_deaths.R</code></a></li>
-<li><a href="https://raw.githubusercontent.com/mkiang/epi501_review/master/exercises/01_headaches/headache_discrete.R"><code>headache_discrete.R</code></a></li>
-<li><a href="https://raw.githubusercontent.com/mkiang/epi501_review/master/exercises/01_headaches/headache_ode.R"><code>headache_ode.R</code></a></li>
-</ul></li>
-</ul></li>
-<li>Annotated code:
-<ul>
-<li>For the <a href="./20180124_intro_to_R_headaches/anno_code/discrete_headaches.nb.html"><code>headache_discrete.R</code></a> file.</li>
-<li>For the <a href="./20180124_intro_to_R_headaches/anno_code/ode_headaches.nb.html"><code>headache_ode.R</code></a> file.</li>
-</ul></li>
-</ul></li>
-<li>Week 0 (January 16, 2018)
-<ul>
-<li><a href="https://swcarpentry.github.io/r-novice-gapminder/">Software Carpentry</a>: Strongly recommend you do sections 0 to 3 if you’ve never used <code>R</code> before. This will get you up and running with the software and introduce you to RStudio.</li>
 <li><a href="http://swirlstats.com/students.html">Swirl Tutorial</a>: If you’ve never used <code>R</code> before, we highly recommend doing this tutorial and the SW tutorial (above).</li>
-<li><a href="./spring_2017/jan25-intro-to-r/index.html">Super quick <code>R</code> Review</a>: If you’ve used <code>R</code> in the past but need a refresher, this is a tutorial I made for Spring 2017. It is not nearly as thorough as the above two.</li>
-<li><a href="https://mkiang.shinyapps.io/DiseaseDynamics/">Shiny app for ODE models</a>: Example of what we’ll be doing throughout the course.</li>
+<li><a href="https://swcarpentry.github.io/r-novice-gapminder/">Software Carpentry</a>: Strongly recommend you do sections 0 to 3 if you’ve never used <code>R</code> before. This will get you up and running with the software and introduce you to RStudio.</li>
+<li><a href="./spring_2017/jan25-intro-to-r/index.html">Super quick <code>R</code> Review</a>: If you’ve used <code>R</code> in the past but need a refresher, this is a tutorial Matt made for Spring 2017. It is not nearly as thorough as the above two.</li>
+<li><a href="https://mkiang.shinyapps.io/DiseaseDynamics/">Shiny app for ODE models</a>: Also from Matt: an example of what we’ll be doing throughout the course.</li>
 </ul></li>
 </ul>
 </div>
