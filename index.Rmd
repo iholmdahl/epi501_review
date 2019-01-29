@@ -54,11 +54,12 @@ knitr::opts_chunk$set(echo = TRUE)
         - For the [`headache_discrete.R`](./20180124_intro_to_R_headaches/anno_code/discrete_headaches.nb.html) file.
         - For the [`headache_ode.R`](./20180124_intro_to_R_headaches/anno_code/ode_headaches.nb.html) file.
 
+
 - Intro to R 
-    - [Swirl Tutorial](http://swirlstats.com/students.html): If you've never used `R` before, we highly recommend doing this tutorial and the Software Company tutorial, below.
+    - [Swirl Tutorial](http://swirlstats.com/students.html): If you've never used `R` before, we highly recommend doing this tutorial as well as the Software Company tutorial, below.
     - [Software Carpentry](https://swcarpentry.github.io/r-novice-gapminder/): Strongly recommend you do sections 0 to 3 if you've never used `R` before. This will get you up and running with the software and introduce you to RStudio.
-    - [Super quick `R` Review](./spring_2017/jan25-intro-to-r/index.html): If you've used `R` in the past but need a refresher, this is a tutorial the previous TF Matt Kiang made for this class in Spring 2017.
-    - [Shiny app for ODE models](https://mkiang.shinyapps.io/DiseaseDynamics/): Also made by Matt: an interactive example of what we'll be doing throughout the course.
+    - [Super quick `R` Review](./spring_2017/jan25-intro-to-r/index.html): If you've used `R` in the past but need a refresher, this is a tutorial Matt Kiang made for this class in Spring 2017.
+    - [Matt's Shiny app for ODE models](https://mkiang.shinyapps.io/DiseaseDynamics/): Also made by Matt: an interactive example of what we'll be doing throughout the course.
 
 ## Source / Archive
 - You can find the source code along with all class code and PDFs on [this project's GitHub page](https://github.com/iholmdahl/epi501_review).
