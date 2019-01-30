@@ -1,8 +1,7 @@
 ---
 title: "Review: ODEs in R"
-subtitle: "Like Monday — But Slower"
-author: "Mathew Kiang"
-date: "1/30/2018"
+author: "Inga Holmdahl"
+date: "2/1/2018"
 output:
   xaringan::moon_reader:
     css: "slides_style.css"
@@ -19,7 +18,7 @@ options(htmltools.dir.version = FALSE)
 
 # Goals for today
 
-1. Review model code from Monday (line-by-line)
+1. Review model code from Wednesday (line-by-line)
 
 --
 
@@ -904,16 +903,17 @@ legend(x = "right", legend = c('S', 'I', 'R'),
 ---
 # Conclusion
 
-- As you can see, ODE models can get complex, very quickly
-    - We could add births, return rates, seasonality, age structure, vaccination, vectors, changing human behavior, etc.
+- As you can see, dynamical models can get complex, very quickly
+    - We could (and will) add births, return rates, seasonality, age structure, vaccination, vectors, changing human behavior, etc.
 
 - Models will get harder than this, but you're beyond the steep learning curve at this point
 
 - You'll need to know how to modify and build on them, but not necessarily the details of `R`
-    - Point of using `R` is just to allow you to quickly see what happens to dynamics when you modify a model
+    - Point of using `R` is just to allow you to quickly see what happens to dynamics when you modify a model (and what happens when something
+    changes about the disease transmission)
 
 
 ---
 class: center, middle, inverse
-# That's it.
+# That's it!
 ## Thanks
