@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hands-on intro to R</title>
+    <title>Hands-on intro to R and Some Modeling</title>
     <meta charset="utf-8">
-    <meta name="author" content="Mathew Kiang" />
+    <meta name="author" content="Inga Holmdahl" />
     <link rel="stylesheet" href="slides_style.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Hands-on intro to R
-## (And maybe some modeling)
-### Mathew Kiang
-### 1/24/2018
+# Hands-on intro to R and Some Modeling
+### Inga Holmdahl
+### 2/1/2019
 
 ---
 
@@ -22,7 +21,7 @@ class: center, middle, inverse, title-slide
 
 # Goals for today
 
-1. Everybody has `R`, RStudio, and `deSolve` installed and can run code
+1. Make sure everybody has `R`, RStudio, and `deSolve` installed and can run code
 
 --
 
@@ -30,16 +29,16 @@ class: center, middle, inverse, title-slide
 
 --
 
-3. Intro to non-infectious ODE model of headaches
+3. Go through non-infectious ODE model of headaches
 
 --
 
-4. Modify an ODE model
+4. Go over headaches worsheet
 
 ---
 
 class: center, middle, inverse
-## Did anybody have trouble installing R?
+## Did anybody here have trouble installing R?
 
 ---
 
@@ -50,25 +49,24 @@ class: center, middle, inverse
 ```r
 library(deSolve)
 ```
+--
+If not, make sure you ran `install.packages("deSolve")` first.
 
 ---
 
 class: center, middle, inverse
-## Do you have the file from Canvas?
-Download via Canvas
-
-Also download from: https://goo.gl/2YDChe
+## Do you have the headache.zip file from Canvas?
 
 ---
-# Tips
+# `R` Tips
 
-- In `RStudio` your code in the source panel (upper left) and use **CMD+Enter** or **Ctrl+Enter** to run it in the console
+- In `RStudio` highlight the code you want to run in the source panel (upper left) and use **CMD+Enter** or **Ctrl+Enter** to run it in the console
     - This allows you to build on old models without deleting your code
 
 --
 
 - Comment (`#`) your code as you build models (or as Caroline builds them)
-    - Trust me, in a week you'll forget why you wrote something some way
+    - In a week you'll probably forget why you wrote something some way
 
 --
 
@@ -77,8 +75,7 @@ Also download from: https://goo.gl/2YDChe
 
 --
 
-- You will be given boilerplate code
-    - Always
+- You will always be given boilerplate code
 
 --
 
@@ -88,44 +85,89 @@ Also download from: https://goo.gl/2YDChe
 
 - Use **ALT + -** to quickly make an assignment (&lt;-)
 
---
+-- 
 
-- It'll be ok. We don't expect you to be `R` masters
-
+- It'll be ok! We don't expect you to be `R` masters
 ---
-# Discrete birth and deaths
 
-- Here is `discrete_births_and_deaths.R` with comments removed:
+# Discrete model of headaches
 
+- Here is `headache_discrete.R` with comments removed: 
 
 ```r
-population &lt;- 1000
-time_seq &lt;- 1:500  
-birth_rate &lt;- 0.4
-death_rate &lt;- 0.4
+N_t &lt;- 500      
+P_t &lt;- 0        
+incidence &lt;- 0.05 
+recovery &lt;- 0.9    
 
 dat &lt;- NULL
-for (t in time_seq) {
-    new_population &lt;- population + round(birth_rate*population) - 
-        round(death_rate*population)
+timesteps &lt;- 1:100
 
-    dat &lt;- rbind(dat, new_population)
-
-    population &lt;- new_population
+for (t in timesteps){
+    N_t1 &lt;- N_t - round(incidence*N_t) + round(recovery*P_t) 
+    P_t1 &lt;- P_t + round(incidence*N_t) - round(recovery*P_t)
+    dat &lt;- rbind(dat, c(N_t1, P_t1)) 
+    
+    N_t &lt;- N_t1 
+    P_t &lt;- P_t1 
 }
 
-plot(dat[, 1], type = "l")
+matplot(dat, xlab="time", ylab="number of people", type="l", lty = 1)
+legend("topright", col = 1:2, legend = c("no headache","headache"), lwd=1)
 ```
 
 - What's happening in this code? Line-by-line.
-- What do we expect to see when we plot this code? Why?
-- What do you need to do to make the line go up/down?
+- Examine the output stored in the variable ‘data’, and plot the results. Each row of the matrix should add to the population size. What does this imply about the dynamics of our population?
+- What does it mean mathematically for the population to be at equilibrium with respect to headaches?
+- What is the equilibrium prevalence of headaches in the population in this case? 
+--
+    - 27/473 = 0.057
 
 ---
 
-# Hands-on / Live coding
+- Verify that **prevalence at equilibrium** is equal to the **incidence x duration**
+    - incidence = 0.05
+    - duration = 1/0.9
+    - 1/0.9*0.05 = 0.055
+--
+- Note: this approximation only works at low prevalence!
 
-- Please form groups with 1-2 other students. Every group should have at least one person who went through the Swirl or SW tutorials.
+---
+# Differential Equation model of headaches
+
+- Here is `headache_ODE.R` with comments removed: 
+
+```r
+library(deSolve)
+
+times &lt;- seq(0, 5000, by = 1)
+yinit &lt;- c(no_headache = 0.95, headache = 0.05)
+parameters &lt;- c(incidence = 0.02, recovery = 0.05)
+
+headache_model &lt;- function(times, yinit, parameters) {
+    with(as.list(c(yinit, parameters)), {
+      
+      dno_headache &lt;- recovery*headache - incidence*no_headache 
+      dheadache &lt;- incidence*no_headache - recovery*headache
+      
+      comparts &lt;- list(c(dno_headache, dheadache))
+      
+      return(comparts)
+    })
+}
+
+result &lt;- as.data.frame(ode(y = yinit, times = times, 
+                            func = headache_model, parms = parameters))
+
+matplot(x = result[, "time"], y = result[, c("no_headache", "headache")], type = "l")
+```
+
+ - The solver needs your model written as a function that takes in a vector of times, initial values, and parameters 
+ (in that order) and returns a list with derivatives of your compartments relative to time.
+
+---
+
+#
 
 ---
 class: center, middle, inverse
@@ -138,22 +180,40 @@ class: center, middle, inverse
 "highlightLines": true,
 "countIncrementalSlides": false
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
-(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-  }
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
 });
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

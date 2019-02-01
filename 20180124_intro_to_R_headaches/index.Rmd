@@ -1,8 +1,7 @@
 ---
-title: "Hands-on intro to R"
-subtitle: "(And maybe some modeling)"
-author: "Mathew Kiang"
-date: "1/24/2018"
+title: "Hands-on intro to R and Some Modeling"
+author: "Inga Holmdahl"
+date: "2/1/2019"
 output:
   xaringan::moon_reader:
     css: "slides_style.css"
@@ -19,7 +18,7 @@ options(htmltools.dir.version = FALSE)
 
 # Goals for today
 
-1. Everybody has `R`, RStudio, and `deSolve` installed and can run code
+1. Make sure everybody has `R`, RStudio, and `deSolve` installed and can run code
 
 --
 
@@ -27,16 +26,16 @@ options(htmltools.dir.version = FALSE)
 
 --
 
-3. Intro to non-infectious ODE model of headaches
+3. Go through non-infectious ODE model of headaches
 
 --
 
-4. Modify an ODE model
+4. Go over headaches worsheet
 
 ---
 
 class: center, middle, inverse
-## Did anybody have trouble installing R?
+## Did anybody here have trouble installing R?
 
 ---
 
@@ -46,25 +45,24 @@ class: center, middle, inverse
 ```{r eval=FALSE}
 library(deSolve)
 ```
+--
+If not, make sure you ran `install.packages("deSolve")` first.
 
 ---
 
 class: center, middle, inverse
-## Do you have the file from Canvas?
-Download via Canvas
-
-Also download from: https://goo.gl/2YDChe
+## Do you have the headache.zip file from Canvas?
 
 ---
-# Tips
+# `R` Tips
 
-- In `RStudio` your code in the source panel (upper left) and use **CMD+Enter** or **Ctrl+Enter** to run it in the console
+- In `RStudio` highlight the code you want to run in the source panel (upper left) and use **CMD+Enter** or **Ctrl+Enter** to run it in the console
     - This allows you to build on old models without deleting your code
 
 --
 
 - Comment (`#`) your code as you build models (or as Caroline builds them)
-    - Trust me, in a week you'll forget why you wrote something some way
+    - In a week you'll probably forget why you wrote something some way
 
 --
 
@@ -73,8 +71,7 @@ Also download from: https://goo.gl/2YDChe
 
 --
 
-- You will be given boilerplate code
-    - Always
+- You will always be given boilerplate code
 
 --
 
@@ -84,43 +81,90 @@ Also download from: https://goo.gl/2YDChe
 
 - Use **ALT + -** to quickly make an assignment (<-)
 
---
+-- 
 
-- It'll be ok. We don't expect you to be `R` masters
-
+- It'll be ok! We don't expect you to be `R` masters
 ---
-# Discrete birth and deaths
 
-- Here is `discrete_births_and_deaths.R` with comments removed:
+# Discrete model of headaches
 
+- Here is `headache_discrete.R` with comments removed: 
 ```{r eval=FALSE}
-population <- 1000
-time_seq <- 1:500  
-birth_rate <- 0.4
-death_rate <- 0.4
+N_t <- 500      
+P_t <- 0        
+incidence <- 0.05 
+recovery <- 0.9    
 
 dat <- NULL
-for (t in time_seq) {
-    new_population <- population + round(birth_rate*population) - 
-        round(death_rate*population)
+timesteps <- 1:100
 
-    dat <- rbind(dat, new_population)
-
-    population <- new_population
+for (t in timesteps){
+    N_t1 <- N_t - round(incidence*N_t) + round(recovery*P_t) 
+    P_t1 <- P_t + round(incidence*N_t) - round(recovery*P_t)
+    dat <- rbind(dat, c(N_t1, P_t1)) 
+    
+    N_t <- N_t1 
+    P_t <- P_t1 
 }
 
-plot(dat[, 1], type = "l")
+matplot(dat, xlab="time", ylab="number of people", type="l", lty = 1)
+legend("topright", col = 1:2, legend = c("no headache","headache"), lwd=1)
+
+
 ```
 
 - What's happening in this code? Line-by-line.
-- What do we expect to see when we plot this code? Why?
-- What do you need to do to make the line go up/down?
+- Examine the output stored in the variable ‘data’, and plot the results. Each row of the matrix should add to the population size. What does this imply about the dynamics of our population?
+- What does it mean mathematically for the population to be at equilibrium with respect to headaches?
+- What is the equilibrium prevalence of headaches in the population in this case? 
+--
+    - 27/473 = 0.057
 
 ---
 
-# Hands-on / Live coding
+- Verify that **prevalence at equilibrium** is equal to the **incidence x duration**
+    - incidence = 0.05
+    - duration = 1/0.9
+    - 1/0.9*0.05 = 0.055
+--
+- Note: this approximation only works at low prevalence!
 
-- Please form groups with 1-2 other students. Every group should have at least one person who went through the Swirl or SW tutorials.
+---
+# Differential Equation model of headaches
+
+- Here is `headache_ODE.R` with comments removed: 
+``` {r eval=FALSE}
+
+library(deSolve)
+
+times <- seq(0, 5000, by = 1)
+yinit <- c(no_headache = 0.95, headache = 0.05)
+parameters <- c(incidence = 0.02, recovery = 0.05)
+
+headache_model <- function(times, yinit, parameters) {
+    with(as.list(c(yinit, parameters)), {
+      
+      dno_headache <- recovery*headache - incidence*no_headache 
+      dheadache <- incidence*no_headache - recovery*headache
+      
+      comparts <- list(c(dno_headache, dheadache))
+      
+      return(comparts)
+    })
+}
+
+result <- as.data.frame(ode(y = yinit, times = times, 
+                            func = headache_model, parms = parameters))
+
+matplot(x = result[, "time"], y = result[, c("no_headache", "headache")], type = "l")
+```
+
+ - The solver needs your model written as a function that takes in a vector of times, initial values, and parameters 
+ (in that order) and returns a list with derivatives of your compartments relative to time.
+
+---
+
+#
 
 ---
 class: center, middle, inverse
