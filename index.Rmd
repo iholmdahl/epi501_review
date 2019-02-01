@@ -47,9 +47,9 @@ knitr::opts_chunk$set(echo = TRUE)
         - [Make an SIS model](./20180129_intro_odes/index.html#70)
         - [Make an SIR model with births/deaths](./20180129_intro_odes/index.html#73)
 -->
-    - [Introduction to `R`, discrete time models, non-infectious ODE models.](./20180124_intro_to_R_headaches/index.html) 
+    - [Introduction to `R`, discrete and ODE headache models.](./20180124_intro_to_R_headaches/index.html) 
     - Download [`headache_exercises.zip`](./exercises/01_headaches/headache_exercises.zip)
-    - Annotated code:
+    - Matt also annotated the code for last year's class:
         - For the [`headache_discrete.R`](./20180124_intro_to_R_headaches/anno_code/discrete_headaches.nb.html) file.
         - For the [`headache_ode.R`](./20180124_intro_to_R_headaches/anno_code/ode_headaches.nb.html) file.
 
