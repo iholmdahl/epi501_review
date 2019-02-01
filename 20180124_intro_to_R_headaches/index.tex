@@ -1,0 +1,419 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Intro to R, plus some modeling},
+            pdfauthor={Inga Holmdahl},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Intro to R, plus some modeling}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Inga Holmdahl}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2/1/2019}
+
+
+\begin{document}
+\maketitle
+
+\section{Goals for today}\label{goals-for-today}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Make sure everybody has \texttt{R}, RStudio, and \texttt{deSolve}
+  installed and can run code
+\end{enumerate}
+
+--
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Go through discrete time model of headaches
+\end{enumerate}
+
+--
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Go through non-infectious ODE model of headaches
+\end{enumerate}
+
+--
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Go over questions from headaches worksheet
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+class: center, middle, inverse \#\# Did anybody here have trouble
+installing R?
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+class: center, middle, inverse \#\# Can you run this command with no
+errors?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(deSolve)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}l@{}}
+\toprule
+\begin{minipage}[t]{0.03\columnwidth}\raggedright\strut
+If not, make sure you ran \texttt{install.packages("deSolve")}
+first.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+class: center, middle, inverse \#\# Do you have the headache.zip file
+from Canvas?
+
+\section{Discrete model of headaches}\label{discrete-model-of-headaches}
+
+\begin{itemize}
+\tightlist
+\item
+  Here is \texttt{headache\_discrete.R} with comments removed:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N_t <-}\StringTok{ }\DecValTok{500}      
+\NormalTok{P_t <-}\StringTok{ }\DecValTok{0}        
+\NormalTok{incidence <-}\StringTok{ }\FloatTok{0.05} 
+\NormalTok{recovery <-}\StringTok{ }\FloatTok{0.9}    
+
+\NormalTok{dat <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{timesteps <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{100}
+
+\ControlFlowTok{for}\NormalTok{ (t }\ControlFlowTok{in}\NormalTok{ timesteps)\{}
+\NormalTok{    N_t1 <-}\StringTok{ }\NormalTok{N_t }\OperatorTok{-}\StringTok{ }\KeywordTok{round}\NormalTok{(incidence}\OperatorTok{*}\NormalTok{N_t) }\OperatorTok{+}\StringTok{ }\KeywordTok{round}\NormalTok{(recovery}\OperatorTok{*}\NormalTok{P_t) }
+\NormalTok{    P_t1 <-}\StringTok{ }\NormalTok{P_t }\OperatorTok{+}\StringTok{ }\KeywordTok{round}\NormalTok{(incidence}\OperatorTok{*}\NormalTok{N_t) }\OperatorTok{-}\StringTok{ }\KeywordTok{round}\NormalTok{(recovery}\OperatorTok{*}\NormalTok{P_t)}
+\NormalTok{    dat <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(dat, }\KeywordTok{c}\NormalTok{(N_t1, P_t1)) }
+    
+\NormalTok{    N_t <-}\StringTok{ }\NormalTok{N_t1 }
+\NormalTok{    P_t <-}\StringTok{ }\NormalTok{P_t1 }
+\NormalTok{\}}
+
+\KeywordTok{matplot}\NormalTok{(dat, }\DataTypeTok{xlab=}\StringTok{"time"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"number of people"}\NormalTok{, }\DataTypeTok{type=}\StringTok{"l"}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\DataTypeTok{col =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"no headache"}\NormalTok{,}\StringTok{"headache"}\NormalTok{), }\DataTypeTok{lwd=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  What's happening in this code? Line-by-line.
+\end{itemize}
+
+\section{Discrete model of
+headaches}\label{discrete-model-of-headaches-1}
+
+\begin{itemize}
+\tightlist
+\item
+  What is the equilibrium prevalence of headaches in the population in
+  this case?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    prevalence = 27/500 = 0.054
+  \end{itemize}
+\end{itemize}
+
+--
+
+\begin{itemize}
+\item
+  Verify that \textbf{prevalence at equilibrium} is equal to the
+  \textbf{incidence x duration}
+
+  \begin{itemize}
+  \item
+    incidence = 0.05
+  \item
+    duration = 1/0.9
+  \item
+    1/0.9*0.05 = 0.055 --
+  \item
+    \emph{Note: this approximation only works at low prevalence}
+  \end{itemize}
+\end{itemize}
+
+\section{Differential Equation model of
+headaches}\label{differential-equation-model-of-headaches}
+
+\begin{itemize}
+\tightlist
+\item
+  Write them out.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(deSolve)}
+
+\NormalTok{times <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5000}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1}\NormalTok{)}
+\NormalTok{yinit <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{no_headache =} \FloatTok{0.95}\NormalTok{, }\DataTypeTok{headache =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{parameters <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{incidence =} \FloatTok{0.02}\NormalTok{, }\DataTypeTok{recovery =} \FloatTok{0.05}\NormalTok{)}
+
+\NormalTok{headache_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(times, yinit, parameters) \{}
+    \KeywordTok{with}\NormalTok{(}\KeywordTok{as.list}\NormalTok{(}\KeywordTok{c}\NormalTok{(yinit, parameters)), \{}
+      
+\NormalTok{     \{\{dno_headache <-}\StringTok{ }\NormalTok{recovery}\OperatorTok{*}\NormalTok{headache }\OperatorTok{-}\StringTok{ }\NormalTok{incidence}\OperatorTok{*}\NormalTok{no_headache\}\}}
+\NormalTok{     \{\{dheadache <-}\StringTok{ }\NormalTok{incidence}\OperatorTok{*}\NormalTok{no_headache }\OperatorTok{-}\StringTok{ }\NormalTok{recovery}\OperatorTok{*}\NormalTok{headache\}\}}
+      
+\NormalTok{      comparts <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{c}\NormalTok{(dno_headache, dheadache))}
+      
+      \KeywordTok{return}\NormalTok{(comparts)}
+\NormalTok{    \})}
+\NormalTok{\}}
+
+\NormalTok{result <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{ode}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ yinit, }\DataTypeTok{times =}\NormalTok{ times, }
+                            \DataTypeTok{func =}\NormalTok{ headache_model, }\DataTypeTok{parms =}\NormalTok{ parameters))}
+
+\KeywordTok{matplot}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ result[, }\StringTok{"time"}\NormalTok{], }
+        \DataTypeTok{y =}\NormalTok{ result[, }\KeywordTok{c}\NormalTok{(}\StringTok{"no_headache"}\NormalTok{, }\StringTok{"headache"}\NormalTok{)], }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Differential Equation model of
+headaches}\label{differential-equation-model-of-headaches-1}
+
+\begin{itemize}
+\tightlist
+\item
+  How would the model change if we add births and deaths?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(deSolve)}
+
+\NormalTok{times <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5000}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1}\NormalTok{)}
+\NormalTok{yinit <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{no_headache =} \FloatTok{0.95}\NormalTok{, }\DataTypeTok{headache =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{parameters <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{incidence =} \FloatTok{0.02}\NormalTok{, }\DataTypeTok{recovery =} \FloatTok{0.05}\NormalTok{)}
+
+\NormalTok{headache_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(times, yinit, parameters) \{}
+    \KeywordTok{with}\NormalTok{(}\KeywordTok{as.list}\NormalTok{(}\KeywordTok{c}\NormalTok{(yinit, parameters)), \{}
+\NormalTok{      dno_headache <-}\StringTok{ }\NormalTok{recovery}\OperatorTok{*}\NormalTok{headache }\OperatorTok{-}\StringTok{ }\NormalTok{incidence}\OperatorTok{*}\NormalTok{no_headache}
+\NormalTok{      dheadache <-}\StringTok{ }\NormalTok{incidence}\OperatorTok{*}\NormalTok{no_headache }\OperatorTok{-}\StringTok{ }\NormalTok{recovery}\OperatorTok{*}\NormalTok{headache}
+\NormalTok{      comparts <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{c}\NormalTok{(dno_headache, dheadache))}
+      \KeywordTok{return}\NormalTok{(comparts)}
+\NormalTok{    \})}
+\NormalTok{\}}
+
+\NormalTok{result <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{ode}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ yinit, }\DataTypeTok{times =}\NormalTok{ times, }
+                            \DataTypeTok{func =}\NormalTok{ headache_model, }\DataTypeTok{parms =}\NormalTok{ parameters))}
+
+\KeywordTok{matplot}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ result[, }\StringTok{"time"}\NormalTok{], }
+        \DataTypeTok{y =}\NormalTok{ result[, }\KeywordTok{c}\NormalTok{(}\StringTok{"no_headache"}\NormalTok{, }\StringTok{"headache"}\NormalTok{)], }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Differential Equation model of
+headaches}\label{differential-equation-model-of-headaches-2}
+
+\begin{itemize}
+\tightlist
+\item
+  How would the model change if we add births and deaths?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(deSolve)}
+
+\NormalTok{times <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5000}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1}\NormalTok{)}
+\NormalTok{yinit <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{no_headache =} \FloatTok{0.95}\NormalTok{, }\DataTypeTok{headache =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{\{\{parameters <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{incidence =} \FloatTok{0.02}\NormalTok{, }\DataTypeTok{recovery =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{b =} \FloatTok{0.01}\NormalTok{, }\DataTypeTok{d =} \FloatTok{0.01}\NormalTok{)\}\}}
+
+\NormalTok{headache_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(times, yinit, parameters) \{}
+    \KeywordTok{with}\NormalTok{(}\KeywordTok{as.list}\NormalTok{(}\KeywordTok{c}\NormalTok{(yinit, parameters)), \{}
+\NormalTok{      \{\{dno_headache <-}\StringTok{ }\NormalTok{recovery}\OperatorTok{*}\NormalTok{headache }\OperatorTok{-}\StringTok{ }\NormalTok{incidence}\OperatorTok{*}\NormalTok{no_headache }\OperatorTok{+}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }
+\StringTok{       }\NormalTok{d}\OperatorTok{*}\NormalTok{dno_headache\}\}}
+\NormalTok{     \{\{dheadache <-}\StringTok{ }\NormalTok{incidence}\OperatorTok{*}\NormalTok{no_headache }\OperatorTok{-}\StringTok{ }\NormalTok{recovery}\OperatorTok{*}\NormalTok{headache }\OperatorTok{-}\StringTok{ }\NormalTok{d}\OperatorTok{*}\NormalTok{dheadache\}\}}
+\NormalTok{      comparts <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{c}\NormalTok{(dno_headache, dheadache))}
+      \KeywordTok{return}\NormalTok{(comparts)}
+\NormalTok{    \})}
+\NormalTok{\}}
+
+\NormalTok{result <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{ode}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ yinit, }\DataTypeTok{times =}\NormalTok{ times, }
+                            \DataTypeTok{func =}\NormalTok{ headache_model, }\DataTypeTok{parms =}\NormalTok{ parameters))}
+
+\KeywordTok{matplot}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ result[, }\StringTok{"time"}\NormalTok{], }
+        \DataTypeTok{y =}\NormalTok{ result[, }\KeywordTok{c}\NormalTok{(}\StringTok{"no_headache"}\NormalTok{, }\StringTok{"headache"}\NormalTok{)], }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Note: we just use \texttt{b} here because the total population
+  size is \texttt{1}}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Differential Equation model of
+headaches}\label{differential-equation-model-of-headaches-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Verify that \textbf{prevalence at equilibrium} is equal to the
+  \textbf{incidence x duration}
+
+  \begin{itemize}
+  \item
+    incidence = 0.02
+  \item
+    duration = 1/0.05
+  \item
+    incidence x duration = 0.4
+  \item
+    prevalence (\texttt{result\$headache{[}100{]}}) = 0.285
+  \end{itemize}
+\item
+  This doesn't really work because of the high prevalence under these
+  parameters
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+class: center, middle, inverse \# Any other questions?
+
+
+\end{document}

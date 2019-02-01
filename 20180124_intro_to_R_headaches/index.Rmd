@@ -125,8 +125,22 @@ legend("topright", col = 1:2, legend = c("no headache","headache"), lwd=1)
 
 --
 
+- Write out the equations.
+
+--
+
+$$
+\begin{aligned}
+N_{t+1} &= N_t - \beta N_t + \gamma P_t \\
+P_{t+1} &= P_t - \gamma P_t + \beta N_t
+\end{aligned}
+$$
+
+---
+#Discrete model of headaches
+
 - What is the equilibrium prevalence of headaches in the population in this case? 
-    - prevalence = 27/473 = 0.057
+    - prevalence = 27/500 = 0.054
 
 --
 
@@ -139,7 +153,7 @@ legend("topright", col = 1:2, legend = c("no headache","headache"), lwd=1)
     - 1/0.9*0.05 = 0.055
 --
     - *Note: this approximation only works at low prevalence*
-
+    
 ---
 # Differential Equation model of headaches
 
@@ -202,6 +216,23 @@ result <- as.data.frame(ode(y = yinit, times = times,
 matplot(x = result[, "time"], 
         y = result[, c("no_headache", "headache")], type = "l")
 ```
+---
+# Differential Equation model of headaches
+
+- Write them out.
+
+--
+
+    - N refers to "no headache" compartment
+    - H refers to "headache" compartment
+
+$$
+\begin{aligned}
+\frac{dN}{dt} &= - \beta N +  \gamma H \\
+\frac{dH}{dt} &= \beta N - \gamma H
+\end{aligned}
+$$
+
 ---
 
 # Differential Equation model of headaches
