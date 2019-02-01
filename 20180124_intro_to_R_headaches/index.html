@@ -69,13 +69,13 @@ class: center, middle, inverse
 
 --
 
-- Drawing the model and/or writing the equations first helps
-
-    - A lot
+- Drawing the model and writing the equations first helps (a lot)
 
 --
 
-- You will always be given boilerplate code
+- We will give you templates for your code
+
+    - You should not be doing this from scratch!
 
 --
 
@@ -120,7 +120,7 @@ legend("topright", col = 1:2, legend = c("no headache","headache"), lwd=1)
 ---
 # Discrete model of headaches
 
-- Examine the output stored in the variable ‘data’, and plot the results. Each row of the matrix should add to the population size. What does this imply about the dynamics of our population?
+- Examine the output stored in the variable ‘data’, and plot the results. Take a look at the data matrix. What does this tell you about the dynamics of our population?
 
 --
 
@@ -217,13 +217,12 @@ library(deSolve)
 
 times &lt;- seq(0, 5000, by = 1)
 yinit &lt;- c(no_headache = 0.95, headache = 0.05)
-parameters &lt;- c(incidence = 0.02, recovery = 0.05, b = 0.01, d = 0.01)
+parameters &lt;- c(incidence = 0.02, recovery = 0.05)
 
 headache_model &lt;- function(times, yinit, parameters) {
     with(as.list(c(yinit, parameters)), {
-      
-     dno_headache &lt;- recovery*headache - incidence*no_headache + b
-     dheadache &lt;- incidence*no_headache - recovery*headache - d
+      dno_headache &lt;- recovery*headache - incidence*no_headache
+      dheadache &lt;- incidence*no_headache - recovery*headache
       comparts &lt;- list(c(dno_headache, dheadache))
       return(comparts)
     })
@@ -240,8 +239,7 @@ matplot(x = result[, "time"],
 
 # Differential Equation model of headaches
 
-- How would the model change if we add births and deaths? Write out the equations to include them.
-
+- How would the model change if we add births and deaths? 
 
 ```r
 library(deSolve)
@@ -252,9 +250,9 @@ yinit &lt;- c(no_headache = 0.95, headache = 0.05)
 
 headache_model &lt;- function(times, yinit, parameters) {
     with(as.list(c(yinit, parameters)), {
-      
-*     dno_headache &lt;- recovery*headache - incidence*no_headache + b
-*     dheadache &lt;- incidence*no_headache - recovery*headache - d
+*      dno_headache &lt;- recovery*headache - incidence*no_headache + b - 
+*       d*dno_headache
+*     dheadache &lt;- incidence*no_headache - recovery*headache - d*dheadache
       comparts &lt;- list(c(dno_headache, dheadache))
       return(comparts)
     })
@@ -266,6 +264,7 @@ result &lt;- as.data.frame(ode(y = yinit, times = times,
 matplot(x = result[, "time"], 
         y = result[, c("no_headache", "headache")], type = "l")
 ```
+- *Note: we just use `b` here because the total population size is `1`*
 
 ---
 
