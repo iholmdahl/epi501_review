@@ -1,5 +1,5 @@
 ---
-title: "Hands-on intro to R and Some Modeling"
+title: "Intro to R, plus some modeling"
 author: "Inga Holmdahl"
 date: "2/1/2019"
 output:
@@ -22,7 +22,7 @@ options(htmltools.dir.version = FALSE)
 
 --
 
-2. Go through discrete time models of population and headaches
+2. Go through discrete time model of headaches
 
 --
 
@@ -30,7 +30,7 @@ options(htmltools.dir.version = FALSE)
 
 --
 
-4. Go over headaches worsheet
+4. Go over questions from headaches worksheet
 
 ---
 
@@ -54,10 +54,9 @@ class: center, middle, inverse
 ## Do you have the headache.zip file from Canvas?
 
 ---
-# `R` Tips
+# R Tips
 
 - In `RStudio` highlight the code you want to run in the source panel (upper left) and use **CMD+Enter** or **Ctrl+Enter** to run it in the console
-    - This allows you to build on old models without deleting your code
 
 --
 
@@ -67,6 +66,7 @@ class: center, middle, inverse
 --
 
 - Drawing the model and/or writing the equations first helps
+
     - A lot
 
 --
@@ -81,11 +81,10 @@ class: center, middle, inverse
 
 - Use **ALT + -** to quickly make an assignment (<-)
 
--- 
+--
 
 - It'll be ok! We don't expect you to be `R` masters
 ---
-
 # Discrete model of headaches
 
 - Here is `headache_discrete.R` with comments removed: 
@@ -114,25 +113,38 @@ legend("topright", col = 1:2, legend = c("no headache","headache"), lwd=1)
 ```
 
 - What's happening in this code? Line-by-line.
-- Examine the output stored in the variable ‘data’, and plot the results. Each row of the matrix should add to the population size. What does this imply about the dynamics of our population?
-- What does it mean mathematically for the population to be at equilibrium with respect to headaches?
-- What is the equilibrium prevalence of headaches in the population in this case? 
---
-    - 27/473 = 0.057
 
 ---
+# Discrete model of headaches
+
+- Examine the output stored in the variable ‘data’, and plot the results. Each row of the matrix should add to the population size. What does this imply about the dynamics of our population?
+
+--
+
+- What does it mean mathematically for the population to be at equilibrium with respect to headaches?
+
+--
+
+- What is the equilibrium prevalence of headaches in the population in this case? 
+    - prevalence = 27/473 = 0.057
+
+--
 
 - Verify that **prevalence at equilibrium** is equal to the **incidence x duration**
+
     - incidence = 0.05
+    
     - duration = 1/0.9
+    
     - 1/0.9*0.05 = 0.055
 --
-- Note: this approximation only works at low prevalence!
+    - *Note: this approximation only works at low prevalence*
 
 ---
 # Differential Equation model of headaches
 
-- Here is `headache_ODE.R` with comments removed: 
+- Where are the differential equations for our model?
+
 ``` {r eval=FALSE}
 
 library(deSolve)
@@ -156,17 +168,115 @@ headache_model <- function(times, yinit, parameters) {
 result <- as.data.frame(ode(y = yinit, times = times, 
                             func = headache_model, parms = parameters))
 
-matplot(x = result[, "time"], y = result[, c("no_headache", "headache")], type = "l")
+matplot(x = result[, "time"], 
+        y = result[, c("no_headache", "headache")], type = "l")
 ```
+---
+# Differential Equation model of headaches
 
- - The solver needs your model written as a function that takes in a vector of times, initial values, and parameters 
- (in that order) and returns a list with derivatives of your compartments relative to time.
+- Write them out.
+
+``` {r eval=FALSE}
+
+library(deSolve)
+
+times <- seq(0, 5000, by = 1)
+yinit <- c(no_headache = 0.95, headache = 0.05)
+parameters <- c(incidence = 0.02, recovery = 0.05)
+
+headache_model <- function(times, yinit, parameters) {
+    with(as.list(c(yinit, parameters)), {
+      
+     {{dno_headache <- recovery*headache - incidence*no_headache}}
+     {{dheadache <- incidence*no_headache - recovery*headache}}
+      
+      comparts <- list(c(dno_headache, dheadache))
+      
+      return(comparts)
+    })
+}
+
+result <- as.data.frame(ode(y = yinit, times = times, 
+                            func = headache_model, parms = parameters))
+
+matplot(x = result[, "time"], 
+        y = result[, c("no_headache", "headache")], type = "l")
+```
+---
+
+# Differential Equation model of headaches
+
+- How would the model change if we add births and deaths?
+
+``` {r eval=FALSE}
+
+library(deSolve)
+
+times <- seq(0, 5000, by = 1)
+yinit <- c(no_headache = 0.95, headache = 0.05)
+parameters <- c(incidence = 0.02, recovery = 0.05, b = 0.01, d = 0.01)
+
+headache_model <- function(times, yinit, parameters) {
+    with(as.list(c(yinit, parameters)), {
+      
+     dno_headache <- recovery*headache - incidence*no_headache + b
+     dheadache <- incidence*no_headache - recovery*headache - d
+      comparts <- list(c(dno_headache, dheadache))
+      return(comparts)
+    })
+}
+
+result <- as.data.frame(ode(y = yinit, times = times, 
+                            func = headache_model, parms = parameters))
+
+matplot(x = result[, "time"], 
+        y = result[, c("no_headache", "headache")], type = "l")
+```
 
 ---
 
-#
+# Differential Equation model of headaches
+
+- How would the model change if we add births and deaths? Write out the equations to include them.
+
+``` {r eval=FALSE}
+
+library(deSolve)
+
+times <- seq(0, 5000, by = 1)
+yinit <- c(no_headache = 0.95, headache = 0.05)
+{{parameters <- c(incidence = 0.02, recovery = 0.05, b = 0.01, d = 0.01)}}
+
+headache_model <- function(times, yinit, parameters) {
+    with(as.list(c(yinit, parameters)), {
+      
+     {{dno_headache <- recovery*headache - incidence*no_headache + b}}
+     {{dheadache <- incidence*no_headache - recovery*headache - d}}
+      comparts <- list(c(dno_headache, dheadache))
+      return(comparts)
+    })
+}
+
+result <- as.data.frame(ode(y = yinit, times = times, 
+                            func = headache_model, parms = parameters))
+
+matplot(x = result[, "time"], 
+        y = result[, c("no_headache", "headache")], type = "l")
+```
+
+---
+
+# Differential Equation model of headaches
+
+- Verify that **prevalence at equilibrium** is equal to the **incidence x duration**
+    - incidence = 0.02
+    - duration = 1/0.05
+    - incidence x duration = 0.4
+    
+    - prevalence (`result$headache[100]`) = 0.285
+
+- This doesn't really work because of the high prevalence under these parameters
 
 ---
 class: center, middle, inverse
-# That's it.
-## Thanks
+# Any other questions?
