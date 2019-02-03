@@ -140,19 +140,20 @@ $$
 #Discrete model of headaches
 
 - What is the equilibrium prevalence of headaches in the population in this case? 
-    - prevalence = 27/500 = 0.054
+
+    - prevalence `= 27/500 = 0.054`
 
 --
 
 - Verify that **prevalence at equilibrium** is equal to the **incidence x duration**
 
-    - incidence = 0.05
+    - incidence `= 0.05`
     
-    - duration = 1/0.9
+    - duration `= 1/0.9`
     
-    - 1/0.9*0.05 = 0.055
+    - `1/0.9*0.05 = 0.055`
 --
-    - *Note: this approximation only works at low prevalence*
+    - *Note: incidence rate x duration = prevalence odds, so this will only work to approximate the prevalence when the prevalence is low*
     
 ---
 # Differential Equation model of headaches
@@ -292,20 +293,23 @@ result <- as.data.frame(ode(y = yinit, times = times,
 matplot(x = result[, "time"], 
         y = result[, c("no_headache", "headache")], type = "l")
 ```
-- *Note: we just use `b` here because the total population size is `1`*
 
 ---
 
 # Differential Equation model of headaches
 
 - Verify that **prevalence at equilibrium** is equal to the **incidence x duration**
-    - incidence = 0.02
-    - duration = 1/0.05
-    - incidence x duration = 0.4
-    
-    - prevalence (`result$headache[100]`) = 0.285
 
-- This doesn't really work because of the high prevalence under these parameters
+    - prevalence `= 0.286`
+        - `tail(result$headache, n=1)`
+
+    - incidence `= 0.02`
+
+    - duration `= 1/0.05`
+
+    - incidence x duration `= 0.40`
+
+    - *this fails the rare disease assumption, but we can still confirm that this is equal to the prevalence odds: `0.286/(1-0.286) = 0.40`*
 
 ---
 class: center, middle, inverse
