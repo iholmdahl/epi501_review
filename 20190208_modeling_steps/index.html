@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Modeling steps</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Inga Holmdahl" />
+    <link rel="stylesheet" href="slides_style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Modeling steps
+### Inga Holmdahl
+### 2/9/2019
+
+---
+
+
+
+
+# Modeling steps
+
+#### 1. Draw out your compartments
+
+--
+
+- this includes all arrows 
+
+  - solid arrows should only be used to describe where people are actually moving
+  
+  - dashed arrows can be used to describe other dynamics if necessary
+
+--
+
+- every population that is important *to your model* must have their own compartment
+
+  - if two people are in the same compartment they will have the same disease behavior
+---
+
+# Modeling steps
+
+1. Draw out your compartments 
+
+#### 2. Define your parameters
+
+--
+
+- this will help you keep track of which parameters affect which compartments
+
+--
+
+- then write them into your compartmental diagram
+
+---
+
+# Modeling steps
+
+1. Draw out your compartments 
+
+2. Define your parameters
+
+#### 3. Write out your equations
+
+--
+
+- one for each of the compartments you drew
+
+--
+
+- for each equation, the number of components added or removed should match the number of arrows (leaving + entering) in your diagram
+
+--
+
+- everything added to a compartment must come from somewhere else 
+
+  - *and vice versa, with few exceptions: *
+
+    - births and deaths
+--
+
+  - check by adding them all up: everything should cancel out
+  
+---
+
+# Modeling steps
+
+1. Draw out your compartments 
+
+2. Define your parameters
+
+3. Write out your equations
+
+
+#### 4. Now you can go write it in R
+
+
+
+---
+class: center, middle, inverse
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

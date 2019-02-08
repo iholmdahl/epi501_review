@@ -1,7 +1,7 @@
 ---
-title: "Review: ODEs in R"
+title: "Review: SIR models in R"
 author: "Inga Holmdahl"
-date: "2/1/2018"
+date: "2/9/2019"
 output:
   xaringan::moon_reader:
     css: "slides_style.css"
@@ -18,7 +18,7 @@ options(htmltools.dir.version = FALSE)
 
 # Goals for today
 
-1. Review model code from Wednesday (line-by-line)
+1. Review components of SIR code
 
 --
 
@@ -27,19 +27,6 @@ options(htmltools.dir.version = FALSE)
 --
 
 3. Modify an SIR (make SIS, add births/deaths)
-
----
-class: center, middle, inverse
-## Can you run this command with no errors?
-
-```{r eval=FALSE}
-library(deSolve)
-```
-
---
-
-- If not, please put up a message on the discussion board or email me.
-
 
 ---
 class: center, middle, inverse
@@ -70,11 +57,11 @@ SIR <- function(t, x, parms){
 simulation <- as.data.frame(ode(y = inits, times = dt, 
                                 func = SIR, parms = parms))
 ```
-Recall, this was the code for SIR models.
+Recall, this is the code for SIR models.
 
 --
 
-(It is up on Canvas.)
+(It is saved on Canvas as `SIR.R`.)
 
 ---
 ```{r eval=FALSE}
@@ -100,11 +87,9 @@ SIR <- function(t, x, parms){
 simulation <- as.data.frame(ode(y = inits, times = dt, 
                                 func = SIR, parms = parms))
 ```
-You'll need to modify things that are highlighted
 
---
+You should only need to modify things that are highlighted.
 
-We will give you the rest (most of it).
 ---
 ```{r eval=FALSE}
 {{library(deSolve)}}
@@ -162,7 +147,7 @@ Make a vector of `parameter = value` pairs named `parms`
 
 --
 
-Every parameter you pass will require a value
+Every parameter in your ODE needs to be assigned a value.
 
 --
 
@@ -404,7 +389,7 @@ dt <- seq(0, 300, 1)
 simulation <- as.data.frame(ode(y = inits, times = dt, 
                                 func = SIR, parms = parms))
 ```
-**NOTE:** Don't change the order. You can — but just don't. (Trust me.)
+**NOTE:** Don't change the order.
 
 ---
 ```{r eval=FALSE}
@@ -602,7 +587,7 @@ matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l")
 `matplot()` just plots one column (`x`) against other columns (`y`) of a matrix.
 
 ---
-# Visualize it (better)
+# Visualize it 
 
 ```{r fig.width=10, fig.height=5}
 matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l", 
@@ -610,7 +595,7 @@ matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l",
 ```
 
 ---
-# Visualize it (better-er)
+# Visualize it 
 
 ```{r fig.width=10, fig.height=5}
 matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l", 
@@ -618,7 +603,7 @@ matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l",
 ```
 
 ---
-# Visualize it (better-er-er)
+# Visualize it 
 
 ```{r fig.width=10, fig.height=5}
 matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l", 
@@ -627,7 +612,7 @@ matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l",
 ```
 
 ---
-# Visualize it (best?)
+# Visualize it
 
 ```{r fig.width=10, fig.height=5}
 matplot(x = simulation[, 1], y = simulation[, 2:4], type = "l", 
@@ -647,14 +632,11 @@ legend(x = "right", legend = c('S', 'I', 'R'), col = 1:3, lty = 1)
 
 --
 
-For really pretty graphs, see `ggplot2`. 
-
-- For example: https://mkiang.shinyapps.io/DiseaseDynamics/
+For nicer graphs, see `ggplot2`. 
 
 ---
 class: center, middle, inverse
-# Challenge Round
-## Let's modify our models
+# Review how to modify our models
 
 ---
 # Make an SI model
@@ -740,7 +722,7 @@ parms_si <- c(beta = 0.333, k = 3)
 inits_si <- c(S = 499, I = 1)
 dt <- seq(0, 300, 1)
 
-SI <- function(t, x, parms){
+{{SI <- function(t, x, parms){ }}
     with(as.list(c(parms, x)), {
 
 {{       N <- S + I }}
@@ -757,6 +739,8 @@ SI <- function(t, x, parms){
  simulation <- as.data.frame(ode(y = inits, times = dt, 
                                  func = SIR, parms = parms))
 ```
+Change the name of our function.
+
 Remove `dR` from from our model.
 
 Also define `N` in one place so we don't have to modify it multiple times.
@@ -905,8 +889,6 @@ legend(x = "right", legend = c('S', 'I', 'R'),
 
 - As you can see, dynamical models can get complex, very quickly
     - We could (and will) add births, return rates, seasonality, age structure, vaccination, vectors, changing human behavior, etc.
-
-- Models will get harder than this, but you're beyond the steep learning curve at this point
 
 - You'll need to know how to modify and build on them, but not necessarily the details of `R`
     - Point of using `R` is just to allow you to quickly see what happens to dynamics when you modify a model (and what happens when something

@@ -27,32 +27,31 @@ knitr::opts_chunk$set(echo = TRUE)
         - In addition, we spent a lot of time on the ebola time-varying transmission model. 
             - I made [a notebook to answer the two questions](./20180209_lab_session/ebola_questions.nb.html) we didn't have time for: (1) What happens when you delay intervention? (2) What happens when you change the rate of decay?
         - As a reminder, [I made an interactive infectious disease app you can play with](https://mkiang.shinyapps.io/DiseaseDynamics/). Play with parameters, especially the relationship between the latent period and the infectious period, to get a better sense of **when** we need a latent compartment.
-        
-- Week 2 (January 29, 2018)
-    - [Ebola and SEIR models](./20180202_ebola/index.html) [[PDF](./20180202_ebola/20180202-ebola.pdf)] [[Code and Data Files](https://github.com/mkiang/epi501_review/tree/master/20180202_ebola/code)]
+
+-->
+
+- Week 2 (February 8, 2019)
+    - [Introduction to ODE models in `R`](./20180129_intro_odes/index.html) 
+        - [SIR code review](./20180129_intro_odes/index.html#7)
+        - [Visualize your results](./20180129_intro_odes/index.html#54)
+        - [Make an SI model](./20180129_intro_odes/index.html#64)
+        - [Make an SIS model](./20180129_intro_odes/index.html#70)
+        - [Make an SIR model with births/deaths](./20180129_intro_odes/index.html#73)
+    - [Ebola and SEIR models](./20180202_ebola/index.html) 
         - [SEIR model with case fatality ratio](./20180202_ebola/index.html#3)
         - [Plotting SEIR lines](./20180202_ebola/index.html#11)
         - [COunting total cases and total deaths](./20180202_ebola/index.html#13)
         - [Time-varying transmission](./20180202_ebola/index.html#18)
         - [Calculate changing $R_0$](./20180202_ebola/index.html#30)
         - [Time-varying beta](./20180202_ebola/index.html#38)
-
--->
+    - [Steps to writing your own compartmental model](./20190208_modeling_steps/index.html)
 
 - Office Hours Week 1 (February 1, 2019)
-<!--    - [Introduction to ODE models in `R`](./20180129_intro_odes/index.html) [[PDF](./20180129_intro_odes/20180129-intro-odes.pdf)] [[Code Files](https://github.com/mkiang/epi501_review/tree/master/20180129_intro_odes/code)]
-        - [SIR code review](./20180129_intro_odes/index.html#7)
-        - [Visualize your results](./20180129_intro_odes/index.html#54)
-        - [Make an SI model](./20180129_intro_odes/index.html#64)
-        - [Make an SIS model](./20180129_intro_odes/index.html#70)
-        - [Make an SIR model with births/deaths](./20180129_intro_odes/index.html#73)
--->
     - [Introduction to `R`, discrete and ODE headache models.](./20180124_intro_to_R_headaches/index.html) 
     - Download [`headache_exercises.zip`](./exercises/01_headaches/headache_exercises.zip)
     - Matt also annotated the code for last year's class:
         - For the [`headache_discrete.R`](./20180124_intro_to_R_headaches/anno_code/discrete_headaches.nb.html) file.
         - For the [`headache_ode.R`](./20180124_intro_to_R_headaches/anno_code/ode_headaches.nb.html) file.
-
 
 - Intro to R 
     - [Swirl Tutorial](http://swirlstats.com/students.html): If you've never used `R` before, we highly recommend doing this tutorial as well as the Software Company tutorial, below.

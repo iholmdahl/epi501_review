@@ -3,7 +3,7 @@
   <head>
     <title>Ebola Worksheet</title>
     <meta charset="utf-8">
-    <meta name="author" content="Mathew Kiang" />
+    <meta name="author" content="" />
     <link rel="stylesheet" href="slides_style.css" type="text/css" />
   </head>
   <body>
@@ -11,20 +11,15 @@
 class: center, middle, inverse, title-slide
 
 # Ebola Worksheet
-## From Wednesday lecture – But Slower
-### Mathew Kiang
-### 2/2/2018
+### 2/8/2019
 
 ---
 
 
 
 
-# Goals for today
+## A guide to the Ebola handout
 
-## Go over the Ebola handout.red[*]
-
-.footnote[.red[*]Again, only providing you with enough code to finish it on your own.]
 
 ---
 class: center, middle, inverse
@@ -33,7 +28,8 @@ class: center, middle, inverse
 
 .footnote[.red[*]Sort of -- Questions are unnumbered on the worksheet.]
 ---
-# Start with code you already have
+## Start with code you already have 
+(start with `seir.R`)
 
 ```r
 SEIR &lt;- function(t, x, parms){
@@ -48,17 +44,17 @@ SEIR &lt;- function(t, x, parms){
     }) 
 }
 ```
-Here is your boilerplate `SEIR` code. Incoporate `\(f\)`, which is a case fatality ratio. Recall, this is the fraction of infectious who do not recover.
+Here is your `SEIR` code. We need to incoporate `\(f\)`, which is a case fatality ratio. Recall, this is the fraction of infectious who do not recover.
 --
 
-- Also, change `a` to `s` ($\sigma$) and `r` to `g` ($\gamma$) to be consistent with the Althaus
+- Also, change `a` to `s` ($\sigma$) and `r` to `g` ($\gamma$) to be consistent with the Althouse paper
 
 --
 
 - We are not going to use `b * k`, so replace that with `\(\beta\)` as `B`
 ---
 class: center, middle, inverse
-# Work with a neighbor to make this model
+# Take a minute to make this model
 ## Remember:
 ### rename **a** to **s**
 ### rename **r** to **g**
@@ -91,7 +87,7 @@ data_out &lt;- as.data.frame(ode(inits, dt, SEIR_ex, parms = parms))
 ```
 Your code should now look something like this.
 
-- This is almost **exactly** like our boilerplate code. 
+- This is almost **exactly** the same as before. 
 --
 
 - Use the `inits`, `dt`, and `parms` I specified
@@ -121,7 +117,7 @@ matplot(data_out[, 1], data_out[, 4], type = 'l',
 ---
 class: center, middle, inverse
 # Question 2
-## With a neighbor, add compartments **C** for total cases and **D** for total deaths
+## Add compartments **C** for total cases and **D** for total deaths
 
 ---
 # Add new compartments
@@ -215,14 +211,18 @@ class: center, middle, inverse
 ## Time-varying transmission probability
 ---
 # Time-varying transmission
-Althaus parameterizes transmission probability as: `$$\beta(t) = \beta e^{-k(t-\tau)}$$`
-
+Althouse parameterizes transmission probability as: 
+$$
+`\begin{aligned}
+\beta(t) = \beta e^{-k(t-\tau)}
+\end{aligned}`
+$$
 --
 
 - Assume: 
-    - `\(k=0.0097\)` 
-    - `\(\beta=0.45\)`
-    - `\(\tau=0\)` (immediate control measures)
+      `\(k=0.0097\)`, 
+      `\(\beta=0.45\)`, 
+      `\(\tau=0\)` (immediate control measures)
 --
 
 With a neighbor, plot `\(\beta\)` as a function of time from `\(t=0\)` to `\(t=120\)`
@@ -337,10 +337,10 @@ Plot it.
 class: center, middle, inverse
 # Question 4
 ## Now calculate and plot the changing R0
+## Hint: This is only one line of code to calculate and one line of code to plot.
 ---
 # Solution
 
-## Hint: This is (literally) one line of code to calculate and one line of code to plot.
 --
 
 ```r
@@ -413,20 +413,6 @@ Yes, that's it..red[*]
 
 .footnote[.red[*] NOTE: This only works when tau=0. Need `ifelse()` if we incorporate tau.]
 ---
-class: center, middle, inverse
-# Examine one of the countries
-## (Do this on your own or with a neighbor)
----
-class: center, middle
-# Where is the data?
-
-###[Althaus's GitHub:](https://github.com/calthaus/Ebola) https://github.com/calthaus/Ebola.red[*]
-
-.footnote[.red[*] NOTE: See the `Intro to R` tutorial if you don't know how to import `csv` files.]
----
-class: center, middle, inverse
-# That's it.
-## Thanks
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
@@ -434,22 +420,40 @@ class: center, middle, inverse
 "highlightLines": true,
 "countIncrementalSlides": false
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
-(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-  }
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
 });
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

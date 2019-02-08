@@ -1,0 +1,97 @@
+---
+title: "Modeling steps"
+author: "Inga Holmdahl"
+date: "2/9/2019"
+output:
+  xaringan::moon_reader:
+    css: "slides_style.css"
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# Modeling steps
+
+#### 1. Draw out your compartments
+
+--
+
+- this includes all arrows 
+
+  - solid arrows should only be used to describe where people are actually moving
+  
+  - dashed arrows can be used to describe other dynamics if necessary
+
+--
+
+- every population that is important *to your model* must have their own compartment
+
+  - if two people are in the same compartment they will have the same disease behavior
+---
+
+# Modeling steps
+
+1. Draw out your compartments 
+
+#### 2. Define your parameters
+
+--
+
+- this will help you keep track of which parameters affect which compartments
+
+--
+
+- then write them into your compartmental diagram
+
+---
+
+# Modeling steps
+
+1. Draw out your compartments 
+
+2. Define your parameters
+
+#### 3. Write out your equations
+
+--
+
+- one for each of the compartments you drew
+
+--
+
+- for each equation, the number of components added or removed should match the number of arrows (leaving + entering) in your diagram
+
+--
+
+- everything added to a compartment must come from somewhere else 
+
+  - *and vice versa, with few exceptions: *
+
+    - births and deaths
+--
+
+  - check by adding them all up: everything should cancel out
+  
+---
+
+# Modeling steps
+
+1. Draw out your compartments 
+
+2. Define your parameters
+
+3. Write out your equations
+
+
+#### 4. Now you can go write it in R
+
+
+
+---
+class: center, middle, inverse
