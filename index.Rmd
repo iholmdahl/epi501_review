@@ -10,7 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Table of Contents
-- [**Common Error Messages**](./errors.html)
+- [**Common Error Messages**](./errors.html) 
+
+- [**Steps to writing your own compartmental model**](./20190208_modeling_steps/index.html)
 
 <!-- - Final Review (March 2, 2018)
     - [Slides for final review](./20180302_review_session/index.html) [[PDF]](./20180302_review_session/review_slides.pdf)
@@ -30,7 +32,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 -->
 
-- Week 2 (February 8, 2019)
+- Office Hours Week 2 (February 8, 2019)
     - [Introduction to ODE models in `R`](./20180129_intro_odes/index.html) 
         - [SIR code review](./20180129_intro_odes/index.html#7)
         - [Visualize your results](./20180129_intro_odes/index.html#54)
@@ -44,7 +46,6 @@ knitr::opts_chunk$set(echo = TRUE)
         - [Time-varying transmission](./20180202_ebola/index.html#18)
         - [Calculate changing $R_0$](./20180202_ebola/index.html#30)
         - [Time-varying beta](./20180202_ebola/index.html#38)
-    - [Steps to writing your own compartmental model](./20190208_modeling_steps/index.html)
 
 - Office Hours Week 1 (February 1, 2019)
     - [Introduction to `R`, discrete and ODE headache models.](./20180124_intro_to_R_headaches/index.html) 
